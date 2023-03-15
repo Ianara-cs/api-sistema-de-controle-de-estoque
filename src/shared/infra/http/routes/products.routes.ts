@@ -1,12 +1,29 @@
 import { Router } from "express";
 import { CreateProductController } from "../../../../modules/product/useCases/createProduct/CreateProductController";
+import { FindProductController } from "../../../../modules/product/useCases/findProduct/FindProductController";
+import { FindProductByExpirationDateController } from "../../../../modules/product/useCases/findProductByExpirationDate/FindProductByExpirationDateController";
+import { FindProductByManufactureDateController } from "../../../../modules/product/useCases/findProductByManufactureDate/FindProductByManufactureDateController";
+import { ListProductsController } from "../../../../modules/product/useCases/listProducts/ListProductsController";
+import { UpdateProductController } from "../../../../modules/product/useCases/updateProduct/UpdateProductController";
 
 export const productRoutes = Router()
 
 const createProductController = new CreateProductController()
+const findProductController = new FindProductController()
+const findProductByExpirationDateController = new FindProductByExpirationDateController()
+const findProductByManufactureDateController = new FindProductByManufactureDateController()
+const listProductsController = new ListProductsController()
+const updateProductController = new UpdateProductController()
 
 
 productRoutes.post("/", createProductController.handle)
+productRoutes.get("/", listProductsController.handle)
+productRoutes.get("/expirationDate", findProductByExpirationDateController.handle)
+productRoutes.get("/manufactureDate", findProductByManufactureDateController.handle)
+productRoutes.get("/:id/", findProductController.handle)
+productRoutes.put("/:id", updateProductController.handle)
+
+
 
 
 

@@ -1,13 +1,13 @@
 import { container } from "tsyringe";
 import { ProductsRepository } from "../../modules/product/repositories/implementations/ProductsRepository";
-import { IProductRepository } from "../../modules/product/repositories/IProductsRepository";
+import { IProductsRepository } from "../../modules/product/repositories/IProductsRepository";
 
 export enum INJECT {
-  PRODUCTS_REPOSITORY = 'PRODUCTS_REPO'
+  PRODUCTS_REPOSITORY = 'PRODUCTS_REPO',
 }
 
 
-container.registerSingleton<IProductRepository>(
+container.registerSingleton<IProductsRepository>(
   INJECT.PRODUCTS_REPOSITORY,
   ProductsRepository
 )

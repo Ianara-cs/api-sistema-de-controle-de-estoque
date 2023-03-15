@@ -2,21 +2,20 @@ import { Product } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 import { INJECT } from "../../../../shared/container";
 import { ICreateProductDTO } from "../../dtos/ICreateProductDTO";
-import { IProductRepository } from "../../repositories/IProductsRepository";
+import { IProductsRepository } from "../../repositories/IProductsRepository";
 
 @injectable()
 export class CreateProductUseCase {
   constructor(
     @inject(INJECT.PRODUCTS_REPOSITORY)
-    private productsRepository : IProductRepository
+    private productsRepository : IProductsRepository
   ) {}
 
-  async execute({name, price, quantity, expiration_date}: ICreateProductDTO): Promise<Product> {
+  async execute({name, expirationDate, manufactureDate}: ICreateProductDTO): Promise<Product> {
     const product = await this.productsRepository.create({
-      name,
-      price, 
-      quantity, 
-      expiration_date
+      name,  
+      expirationDate,
+      manufactureDate
     })
 
     return product

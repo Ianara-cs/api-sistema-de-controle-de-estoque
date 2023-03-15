@@ -12,48 +12,66 @@ datasource db {
 
 model Product {
   id              String   @id() @default(uuid())
-  
   name            String
-  quantity        Int
-  expiration_date DateTime
-  price           Decimal
+  expirationDate  DateTime
+  manufactureDate DateTime
   createdAt       DateTime @default(now())
   updateAt        DateTime @updatedAt
 
-  ProductsOnSales ProductsOnSales[]
+  supplierOnProduct SupplierOnProduct[]
+  stocks            InventoryItem[]
 }
 
-model Purveyor {
-  id    String  @id() @default(uuid())
+model Supplier {
+  id    String @id() @default(uuid())
   name  String
+  cnpj  String @unique
   phone String
-  email String  @unique
-  Order Order[]
+  email String @unique
+
+  addresses         Address[]
+  supplierOnProduct SupplierOnProduct[]
 }
 
-model Order {
-  id        String   @id() @default(uuid())
-  createdAt DateTime @default(now())
-
-  porveyor   Purveyor @relation(fields: [purveyorId], references: [id])
-  purveyorId String
-}
-
-model Sale {
-  id          String   @id() @default(uuid())
-  createdAt   DateTime @default(now())
-  totalAmount Decimal
-
-  ProductsOnSales ProductsOnSales[]
-}
-
-model ProductsOnSales {
-  Sale       Sale     @relation(fields: [saleId], references: [id])
-  saleId     String
-  Product    Product  @relation(fields: [productId], references: [id])
+model SupplierOnProduct {
+  product    Product  @relation(fields: [productId], references: [id])
   productId  String
+  supplier   Supplier @relation(fields: [supplierId], references: [id])
+  supplierId String
   assignedAt DateTime @default(now())
-  assignedBy String
 
-  @@id([saleId, productId])
+  @@id([productId, supplierId])
+}
+
+model Address {
+  id           String  @id() @default(uuid())
+  street       String
+  number       Int
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  country      String
+  zipCode      String
+
+  supplier    Supplier?  @relation(fields: [supplierId], references: [id])
+  supplierId  String?
+  inventory   Inventory? @relation(fields: [inventoryId], references: [id])
+  inventoryId String?    @unique
+}
+
+model InventoryItem {
+  id       String @id() @default(uuid())
+  quantity Int
+
+  product   Product[]
+  inventory Inventory[]
+}
+
+model Inventory {
+  id   String @id() @default(uuid())
+  name String
+
+  adress Address?
+  items  InventoryItem[]
 }

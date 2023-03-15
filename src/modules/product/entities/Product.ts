@@ -1,9 +1,8 @@
 export class Product {
   id: string
   name: string
-  quantity: number
-  expiration_date: Date
-  price: number
+  expirationDate: Date
+  manufactureDate: Date
   createdAt: Date
   updateAt: Date
 
