@@ -54,7 +54,7 @@ model Address {
   country      String
   zipCode      String
 
-  supplier    Supplier?  @relation(fields: [supplierId], references: [id])
+  supplier    Supplier?  @relation(fields: [supplierId], references: [id]) // Cadastrar migration no banco
   supplierId  String?
   inventory   Inventory? @relation(fields: [inventoryId], references: [id])
   inventoryId String?    @unique

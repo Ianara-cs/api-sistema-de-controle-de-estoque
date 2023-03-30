@@ -9,6 +9,13 @@ export class AppError {
   }
 }
 
+export class BadRequestException extends AppError {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+
 export class NotFoundException extends AppError {
   constructor(message: string) {
     super(message, 404);
