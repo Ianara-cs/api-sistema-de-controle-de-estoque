@@ -1,9 +1,9 @@
-import { address } from "./Address"
+import { Address } from "./Address"
 
 export class Supplier {
   name: string
   cnpj: string
   phone: string
-  address: address[]
+  address: Address[]
   email: string
 }

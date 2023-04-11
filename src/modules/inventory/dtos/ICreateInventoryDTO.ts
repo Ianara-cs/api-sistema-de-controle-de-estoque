@@ -1,7 +1,9 @@
-export class Address {
+export interface ICreateInventoryDTO {
+  name: string
+
   street: string
   number: number
-  complement: string | null
+  complement: string
   neighborhood: string
   city: string
   state: string
