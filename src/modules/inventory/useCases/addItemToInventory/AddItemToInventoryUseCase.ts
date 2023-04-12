@@ -23,7 +23,11 @@ export class AddItemToInventoryUseCase {
     await findProductUseCase.execute(productId)
 
     const findInventoryByIdUseCase = container.resolve(FindInventoryByIdUseCase)
-    await findInventoryByIdUseCase.execute(inventoryId)
+    const inventory =  await findInventoryByIdUseCase.execute(inventoryId)
+
+    if(!(inventory.items.map(item => item.productId === productId))) {
+      throw new BadRequestException("This product is already registered in the inventory")
+    }
 
     if(quantity <= 0) {
       throw new BadRequestException("Quantity cannot have a value less than 1!")

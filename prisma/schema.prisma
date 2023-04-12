@@ -65,9 +65,9 @@ model InventoryItem {
   quantity Int
 
   inventory   Inventory? @relation(fields: [inventoryId], references: [id])
-  inventoryId String?    @unique
+  inventoryId String?
   product     Product?   @relation(fields: [productId], references: [id])
-  productId   String?    @unique
+  productId   String?
 }
 
 model Inventory {
