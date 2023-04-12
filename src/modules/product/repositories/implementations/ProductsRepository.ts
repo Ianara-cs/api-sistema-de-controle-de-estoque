@@ -1,7 +1,7 @@
-import { Product } from "@prisma/client";
 import { prisma } from "../../../../shared/database/prismaClient";
 import { ICreateProductDTO } from "../../dtos/ICreateProductDTO";
 import { IUpdateProductDTO } from "../../dtos/IUpdateProductDTO";
+import { Product } from "../../entities/Product";
 import { IProductsRepository } from "../IProductsRepository";
 
 export class ProductsRepository implements IProductsRepository {
@@ -22,23 +22,23 @@ export class ProductsRepository implements IProductsRepository {
   }
 
   async findProductByExpirationDate(date: Date): Promise<Product[]> {
-    let products: Product[] = []
-    if(date) {
-      products = await prisma.product.findMany({
-        where: {expirationDate: date}
-      })
-    }
+    const products = await prisma.product.findMany({
+      where: {expirationDate: {
+        gte: new Date(date),
+        lte: new Date(date),
+      }}
+    })
     
     return products
   }
 
   async findProductByManufactureDate(date: Date): Promise<Product[]> {
-    let products: Product[] = []
-    if(date) {
-      products = await prisma.product.findMany({
-        where: {manufactureDate: date}
-      })
-    }
+    const products = await prisma.product.findMany({
+      where: {manufactureDate: {
+        gte: new Date(date),
+        lte: new Date(date),
+      }}
+    })
     
     return products
   }

@@ -5,6 +5,7 @@ import { FindProductByManufactureDateUseCase } from "./FindProductByManufactureD
 export class FindProductByManufactureDateController {
   async handle(request: Request, response: Response) {
     const {manufacture_date} = request.body
+    
     const findProductByManufactureDateUseCase = container.resolve(FindProductByManufactureDateUseCase)
 
     const products = await findProductByManufactureDateUseCase.execute(manufacture_date)

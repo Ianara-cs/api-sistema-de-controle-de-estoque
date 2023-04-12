@@ -5,7 +5,7 @@ import { FindProductByExpirationDateUseCase } from "./FindProductByExpirationDat
 export class FindProductByExpirationDateController {
   async handle(request: Request, response: Response) {
     const {expiration_date} = request.body
-    console.log(expiration_date)
+    
     const findProductByExpirationDateUseCase = container.resolve(FindProductByExpirationDateUseCase)
 
     const products = await findProductByExpirationDateUseCase.execute(expiration_date)
