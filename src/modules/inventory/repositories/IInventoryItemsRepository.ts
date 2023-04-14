@@ -9,4 +9,5 @@ export interface IInventoryItemsRepository {
   update(data: IUpdateInventoryItemDTO): Promise<InventoryItem>
   findItemsInInventoryByExpirationDate(inventoryId: string, date: Date): Promise<InventoryItem[]>
   findItemsInInventoryByLowStock(inventoryId: string): Promise<InventoryItem[]>
+  deleteInventoryItem(id: string): Promise<InventoryItem>
 }

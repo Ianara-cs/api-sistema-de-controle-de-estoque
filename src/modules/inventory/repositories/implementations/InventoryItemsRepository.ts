@@ -67,4 +67,12 @@ export class InventoryItemsRepository implements IInventoryItemsRepository  {
     return items
   }
 
+  async deleteInventoryItem(id: string): Promise<InventoryItem> {
+    const inventoryItem = await prisma.inventoryItem.delete({
+      where: {id}
+    })
+
+    return inventoryItem
+  }
+
 }

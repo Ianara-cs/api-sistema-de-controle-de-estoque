@@ -8,4 +8,6 @@ export interface IInventoriesRepository {
   findById(id: string): Promise<Inventory | null>
   findAll(): Promise<IInventoryResponse[]>
   update(data: IUpdateInventoryDTO): Promise<IInventoryResponse>
+  deleteInventory(id: string): Promise<Inventory>
+  
 }

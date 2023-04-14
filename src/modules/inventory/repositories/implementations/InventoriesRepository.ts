@@ -50,4 +50,16 @@ export class InventoriesRepository implements IInventoriesRepository {
 
     return inventory
   }
+
+  async deleteInventory(id: string): Promise<Inventory> {
+    const inventory = await prisma.inventory.delete({
+      where: {id},
+      include: {
+        address: true, 
+        items: true
+      }
+    })
+
+    return inventory
+  }
 }
