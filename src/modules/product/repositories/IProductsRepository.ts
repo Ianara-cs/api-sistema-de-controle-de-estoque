@@ -1,5 +1,6 @@
 import { Product } from "@prisma/client";
 import { ICreateProductDTO } from "../dtos/ICreateProductDTO";
+import { IProductAndSupplierResponseDTO } from "../dtos/IProductAndSupplierResponseDTO";
 import { IUpdateProductDTO } from "../dtos/IUpdateProductDTO";
 
 export interface IProductsRepository {
@@ -9,5 +10,5 @@ export interface IProductsRepository {
   findProductByManufactureDate(date: Date): Promise<Product[]>
   listProducts(): Promise<Product[]>
   updateProduct(data: IUpdateProductDTO): Promise<Product>
-
+  addProductToASupplier(productId: string, supplierId: string): Promise<IProductAndSupplierResponseDTO>
 }

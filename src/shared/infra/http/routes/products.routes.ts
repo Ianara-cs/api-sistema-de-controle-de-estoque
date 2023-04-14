@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { AssignProductToASupplierController } from "../../../../modules/product/useCases/assignProductToASupplier/AssignProductToASupplierController";
 import { CreateProductController } from "../../../../modules/product/useCases/createProduct/CreateProductController";
 import { FindProductController } from "../../../../modules/product/useCases/findProduct/FindProductController";
 import { FindProductByExpirationDateController } from "../../../../modules/product/useCases/findProductByExpirationDate/FindProductByExpirationDateController";
@@ -9,6 +10,7 @@ import {
   productExpirationDateValidator,
   productManufactureDateValidator,
   productRegistrationValidator,
+  productSupplierValidator,
   productUpdateValidator
 } from "../middlewares/validateRequestsMiddleware/productValidateRequests";
 
@@ -20,13 +22,15 @@ const findProductByExpirationDateController = new FindProductByExpirationDateCon
 const findProductByManufactureDateController = new FindProductByManufactureDateController()
 const listProductsController = new ListProductsController()
 const updateProductController = new UpdateProductController()
+const assignProductToASupplierController = new AssignProductToASupplierController()
 
 
 productRoutes.post("/", productRegistrationValidator, createProductController.handle)
 productRoutes.get("/", listProductsController.handle)
 productRoutes.get("/expirationDate", productExpirationDateValidator, findProductByExpirationDateController.handle)
 productRoutes.get("/manufactureDate", productManufactureDateValidator, findProductByManufactureDateController.handle)
-productRoutes.get("/:id/", findProductController.handle)
+productRoutes.get("/:id", findProductController.handle)
+productRoutes.post("/:id/addSupplier", productSupplierValidator, assignProductToASupplierController.handle)
 productRoutes.put("/:id", productUpdateValidator,  updateProductController.handle)
 
 

@@ -1,5 +1,6 @@
 import { prisma } from "../../../../shared/database/prismaClient";
 import { ICreateProductDTO } from "../../dtos/ICreateProductDTO";
+import { IProductAndSupplierResponseDTO } from "../../dtos/IProductAndSupplierResponseDTO";
 import { IUpdateProductDTO } from "../../dtos/IUpdateProductDTO";
 import { Product } from "../../entities/Product";
 import { IProductsRepository } from "../IProductsRepository";
@@ -7,7 +8,8 @@ import { IProductsRepository } from "../IProductsRepository";
 export class ProductsRepository implements IProductsRepository {
   async create({name, expirationDate, manufactureDate}: ICreateProductDTO): Promise<Product> {
     const newProduct = await prisma.product.create({
-      data: {expirationDate, name, manufactureDate}  
+      data: {expirationDate, name, manufactureDate}, 
+      include:{supplierOnProduct: true}  
     })
 
     return newProduct
@@ -15,7 +17,8 @@ export class ProductsRepository implements IProductsRepository {
 
   async findById(id: string): Promise<Product| null> {
     const product = await prisma.product.findUnique({
-      where: {id}
+      where: {id},
+      include: {supplierOnProduct: true}
     })
 
     return product
@@ -26,7 +29,8 @@ export class ProductsRepository implements IProductsRepository {
       where: {expirationDate: {
         gte: new Date(date),
         lte: new Date(date),
-      }}
+      }},
+      include: {supplierOnProduct: true} 
     })
     
     return products
@@ -37,14 +41,17 @@ export class ProductsRepository implements IProductsRepository {
       where: {manufactureDate: {
         gte: new Date(date),
         lte: new Date(date),
-      }}
+      }},
+      include: {supplierOnProduct: true} 
     })
     
     return products
   }
 
   async listProducts(): Promise<Product[]> {
-    const products = await prisma.product.findMany()
+    const products = await prisma.product.findMany({
+      include: {supplierOnProduct: true} 
+    })
     return products
   }
 
@@ -57,9 +64,20 @@ export class ProductsRepository implements IProductsRepository {
         name,
         expirationDate,
         manufactureDate
-      }
+      },
+      include: {supplierOnProduct: true} 
     })
 
     return updateProduct
+  }
+
+  async addProductToASupplier(productId: string, supplierId: string): Promise<IProductAndSupplierResponseDTO> {
+    const productAndSupplier = await prisma.supplierOnProduct.create({
+      data: {
+        productId, supplierId
+      }
+    })
+
+    return productAndSupplier
   }
 }

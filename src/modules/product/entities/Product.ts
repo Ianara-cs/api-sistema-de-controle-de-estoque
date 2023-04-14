@@ -1,3 +1,5 @@
+import { SupplierOnProduct } from "./SupplierOnProduct"
+
 export class Product {
   id: string
   name: string
@@ -5,6 +7,5 @@ export class Product {
   manufactureDate: Date
   createdAt: Date
   updateAt: Date
-
-  //ProductsOnSales ProductsOnSales[]
+  supplierOnProduct: SupplierOnProduct[]
 }
