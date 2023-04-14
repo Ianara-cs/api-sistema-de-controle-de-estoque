@@ -5,12 +5,13 @@ import { InventoryItem } from "../../entities/InventoryItem";
 import { IInventoryItemsRepository } from "../IInventoryItemsRepository";
 
 export class InventoryItemsRepository implements IInventoryItemsRepository  {
-  async create({inventoryId, productId, quantity}: ICreateInventoryItemDTO): Promise<InventoryItem> {
+  async create({inventoryId, productId, quantity, supplierId}: ICreateInventoryItemDTO): Promise<InventoryItem> {
     const inventoryItem = await prisma.inventoryItem.create({
       data: {
         quantity,
         inventoryId,
-        productId
+        supplierOnProductProductId: productId,
+        supplierOnProductSupplierId: supplierId,
       }, 
     })
 
@@ -42,14 +43,16 @@ export class InventoryItemsRepository implements IInventoryItemsRepository  {
     return item
   }
 
-  async findItemsInInventoryByExpirationDate(inventoryId: string ,date: Date): Promise<InventoryItem[]> {
+  async findItemsInInventoryByExpirationDate(inventoryId: string, date: Date): Promise<InventoryItem[]> {
     const items = await prisma.inventoryItem.findMany({
       where: {
         inventoryId,
-        product: {expirationDate: {
-          gte: new Date(date),
-          lte: new Date(date),
-        }}
+        supplierOnProduct: {
+          product: {expirationDate: {
+            gte: new Date(date),
+            lte: new Date(date),
+          }}
+        }
       }
     })
 

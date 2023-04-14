@@ -1,7 +1,8 @@
 import { container, inject, injectable } from "tsyringe";
 import { INJECT } from "../../../../shared/container";
-import { BadRequestException } from "../../../../shared/errors/AppErrors";
+import { BadRequestException, NotFoundException } from "../../../../shared/errors/AppErrors";
 import { FindProductUseCase } from "../../../product/useCases/findProduct/FindProductUseCase";
+import { FindSupplierByIdUseCase } from "../../../supplier/useCases/findSupplierById/FindSupplierByIdUseCase";
 import { ICreateInventoryItemDTO } from "../../dtos/ICreateInventoryItemDTO";
 import { InventoryItem } from "../../entities/InventoryItem";
 import { IInventoryItemsRepository } from "../../repositories/IInventoryItemsRepository";
@@ -14,20 +15,31 @@ export class AddItemToInventoryUseCase {
     private inventoryItemsRepository: IInventoryItemsRepository
   ) {}
 
-  async execute({quantity, inventoryId, productId}: ICreateInventoryItemDTO): Promise<InventoryItem> {
-    if(!inventoryId || !productId) {
-      throw new BadRequestException("InventoryId and productId cannot be null")
-    }
-
+  async execute({quantity, inventoryId, productId, supplierId}: ICreateInventoryItemDTO): Promise<InventoryItem> {
     const findProductUseCase = container.resolve(FindProductUseCase)
-    await findProductUseCase.execute(productId)
+    const product = await findProductUseCase.execute(productId)
 
     const findInventoryByIdUseCase = container.resolve(FindInventoryByIdUseCase)
     const inventory =  await findInventoryByIdUseCase.execute(inventoryId)
+
+    const findSupplierByIdUseCase = container.resolve(FindSupplierByIdUseCase)
+    await findSupplierByIdUseCase.execute(supplierId)
+
+    const supplierOnProduct = product.supplierOnProduct.map(
+      supplier => supplier.supplierId === supplierId
+    )
+
+    if(!supplierOnProduct[0]) {
+      throw new NotFoundException("Product and Supplier not found!")
+    }
     
-    const inventoryItem = inventory.items.map(item => item.productId === productId)
+    const inventoryItem = inventory.items.map(
+      item => item.supplierOnProductProductId === productId &&
+      item.supplierOnProductSupplierId === supplierId
+    )
+
     if(inventoryItem[0]) {
-      throw new BadRequestException("This product is already registered in the inventory")
+      throw new BadRequestException("This product is already registered in the inventory!")
     }
 
     if(quantity <= 0) {
@@ -35,7 +47,7 @@ export class AddItemToInventoryUseCase {
     }
     
     const item = await this.inventoryItemsRepository.create({
-      inventoryId, productId, quantity
+      inventoryId, productId, quantity, supplierId
     })
 
     return item

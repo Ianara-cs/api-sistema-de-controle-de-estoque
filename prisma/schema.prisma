@@ -19,7 +19,6 @@ model Product {
   updateAt        DateTime @updatedAt
 
   supplierOnProduct SupplierOnProduct[]
-  stocks            InventoryItem[]
 }
 
 model Supplier {
@@ -34,11 +33,12 @@ model Supplier {
 }
 
 model SupplierOnProduct {
-  product    Product  @relation(fields: [productId], references: [id])
+  product    Product         @relation(fields: [productId], references: [id])
   productId  String
-  supplier   Supplier @relation(fields: [supplierId], references: [id])
+  supplier   Supplier        @relation(fields: [supplierId], references: [id])
   supplierId String
-  assignedAt DateTime @default(now())
+  assignedAt DateTime        @default(now())
+  stocks     InventoryItem[]
 
   @@id([productId, supplierId])
 }
@@ -64,10 +64,11 @@ model InventoryItem {
   id       String @id() @default(uuid())
   quantity Int
 
-  inventory   Inventory? @relation(fields: [inventoryId], references: [id])
-  inventoryId String?
-  product     Product?   @relation(fields: [productId], references: [id])
-  productId   String?
+  inventory                   Inventory?         @relation(fields: [inventoryId], references: [id])
+  inventoryId                 String?
+  supplierOnProduct           SupplierOnProduct? @relation(fields: [supplierOnProductProductId, supplierOnProductSupplierId], references: [productId, supplierId])
+  supplierOnProductProductId  String?
+  supplierOnProductSupplierId String?
 }
 
 model Inventory {
