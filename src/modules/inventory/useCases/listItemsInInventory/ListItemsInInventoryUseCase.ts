@@ -15,7 +15,7 @@ export class ListItemsInInventoryUseCase {
     const findInventoryById = container.resolve(FindInventoryByIdUseCase)
     await findInventoryById.execute(inventoryId)
 
-    const items = await this.inventoryItemsRepository.findAll(inventoryId)
+    const items = await this.inventoryItemsRepository.findAllItems(inventoryId)
     
     return items
   }

@@ -13,7 +13,7 @@ export class UpdateItemQuantityUseCase {
   ) {}
 
   async execute({id, quantity}: IUpdateInventoryItemDTO): Promise<InventoryItem> {
-    const item = await this.inventoryItemsRepository.findById(id)
+    const item = await this.inventoryItemsRepository.findItemById(id)
 
     if(!item) {
       throw new NotFoundException("Item not found!")

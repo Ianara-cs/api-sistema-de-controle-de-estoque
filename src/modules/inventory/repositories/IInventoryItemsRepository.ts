@@ -4,8 +4,8 @@ import { InventoryItem } from "../entities/InventoryItem";
 
 export interface IInventoryItemsRepository {
   create(data: ICreateInventoryItemDTO): Promise<InventoryItem>
-  findById(id: string): Promise<InventoryItem | null>
-  findAll(inventoryId: string): Promise<InventoryItem[]>
+  findItemById(id: string): Promise<InventoryItem | null>
+  findAllItems(inventoryId: string): Promise<InventoryItem[]>
   update(data: IUpdateInventoryItemDTO): Promise<InventoryItem>
   findItemsInInventoryByExpirationDate(inventoryId: string, date: Date): Promise<InventoryItem[]>
   findItemsInInventoryByLowStock(inventoryId: string): Promise<InventoryItem[]>

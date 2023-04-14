@@ -17,13 +17,13 @@ export class InventoryItemsRepository implements IInventoryItemsRepository  {
     return inventoryItem
   }
 
-  async findById(id: string): Promise<InventoryItem | null> {
+  async findItemById(id: string): Promise<InventoryItem | null> {
     const item = prisma.inventoryItem.findUnique({where: {id}})
 
     return item
   }
   
-  async findAll(inventoryId: string): Promise<InventoryItem[]> {
+  async findAllItems(inventoryId: string): Promise<InventoryItem[]> {
     const items = await prisma.inventoryItem.findMany({
       where: {inventoryId}
     })
