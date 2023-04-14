@@ -1,8 +1,8 @@
+import { Product } from "@prisma/client";
 import { prisma } from "../../../../shared/database/prismaClient";
 import { ICreateProductDTO } from "../../dtos/ICreateProductDTO";
 import { IProductAndSupplierResponseDTO } from "../../dtos/IProductAndSupplierResponseDTO";
 import { IUpdateProductDTO } from "../../dtos/IUpdateProductDTO";
-import { Product } from "../../entities/Product";
 import { IProductsRepository } from "../IProductsRepository";
 
 export class ProductsRepository implements IProductsRepository {
@@ -77,5 +77,13 @@ export class ProductsRepository implements IProductsRepository {
     })
 
     return productAndSupplier
+  }
+
+  async deleteProduct(id: string): Promise<Product> {
+    const product = await prisma.product.delete({
+      where: {id}
+    })
+
+    return product
   }
 }

@@ -11,4 +11,5 @@ export interface IProductsRepository {
   listProducts(): Promise<Product[]>
   updateProduct(data: IUpdateProductDTO): Promise<Product>
   addProductToASupplier(productId: string, supplierId: string): Promise<IProductAndSupplierResponseDTO>
+  deleteProduct(id: string): Promise<Product>
 }
