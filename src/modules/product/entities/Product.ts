@@ -7,5 +7,5 @@ export class Product {
   manufactureDate: Date
   createdAt: Date
   updateAt: Date
-  supplierOnProduct: SupplierOnProduct[]
+  supplierOnProduct?: SupplierOnProduct[]
 }
