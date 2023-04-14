@@ -4,11 +4,12 @@ import { FindProductByExpirationDateUseCase } from "./FindProductByExpirationDat
 
 export class FindProductByExpirationDateController {
   async handle(request: Request, response: Response) {
-    const {expiration_date} = request.body
+    const {expiration_date} = request.query
+    const date = expiration_date as unknown
     
     const findProductByExpirationDateUseCase = container.resolve(FindProductByExpirationDateUseCase)
 
-    const products = await findProductByExpirationDateUseCase.execute(expiration_date)
+    const products = await findProductByExpirationDateUseCase.execute(date as Date)
 
     return response.status(200).json(products)
   }

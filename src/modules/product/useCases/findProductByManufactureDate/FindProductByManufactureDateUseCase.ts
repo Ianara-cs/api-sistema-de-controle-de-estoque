@@ -11,6 +11,8 @@ export class FindProductByManufactureDateUseCase {
   ){}
   
   async execute(manufactureDate: Date): Promise<Product[]> {
+
+
     const products = await this.productsRepository.findProductByManufactureDate(manufactureDate)
 
     return products

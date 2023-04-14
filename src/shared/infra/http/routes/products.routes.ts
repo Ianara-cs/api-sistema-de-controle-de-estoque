@@ -5,6 +5,12 @@ import { FindProductByExpirationDateController } from "../../../../modules/produ
 import { FindProductByManufactureDateController } from "../../../../modules/product/useCases/findProductByManufactureDate/FindProductByManufactureDateController";
 import { ListProductsController } from "../../../../modules/product/useCases/listProducts/ListProductsController";
 import { UpdateProductController } from "../../../../modules/product/useCases/updateProduct/UpdateProductController";
+import {
+  productExpirationDateValidator,
+  productManufactureDateValidator,
+  productRegistrationValidator,
+  productUpdateValidator
+} from "../middlewares/validateRequestsMiddleware/productValidateRequests";
 
 export const productRoutes = Router()
 
@@ -16,12 +22,12 @@ const listProductsController = new ListProductsController()
 const updateProductController = new UpdateProductController()
 
 
-productRoutes.post("/", createProductController.handle)
+productRoutes.post("/", productRegistrationValidator, createProductController.handle)
 productRoutes.get("/", listProductsController.handle)
-productRoutes.get("/expirationDate", findProductByExpirationDateController.handle)
-productRoutes.get("/manufactureDate", findProductByManufactureDateController.handle)
+productRoutes.get("/expirationDate", productExpirationDateValidator, findProductByExpirationDateController.handle)
+productRoutes.get("/manufactureDate", productManufactureDateValidator, findProductByManufactureDateController.handle)
 productRoutes.get("/:id/", findProductController.handle)
-productRoutes.put("/:id", updateProductController.handle)
+productRoutes.put("/:id", productUpdateValidator,  updateProductController.handle)
 
 
 

@@ -9,6 +9,7 @@ import { FindItemsInInventoryByLowStockController } from "../../../../modules/in
 import { ListItemsInInventoryController } from "../../../../modules/inventory/useCases/listItemsInInventory/ListItemsInInventoryController";
 import { UpdateInventoryController } from "../../../../modules/inventory/useCases/updateInventory/UpdateInventoryController";
 import { UpdateItemQuantityController } from "../../../../modules/inventory/useCases/updateItemQuantity/UpdateItemQuantityController";
+import { inventoryRegistrationValidator, inventoryUpdateValidator, itemExpirationDateValidator, itemRegistrationValidator, quantityValidator } from "../middlewares/validateRequestsMiddleware/inventoryValidateRequests";
 
 export const inventoriesRoutes = Router()
 
@@ -26,12 +27,12 @@ const updateItemQuantityController = new UpdateItemQuantityController()
 const listItemsInInventoryController = new ListItemsInInventoryController()
 
 inventoriesRoutes.get("/", findAllInventoryController.handle)
-inventoriesRoutes.post("/", createInventoryController.handle)
-inventoriesRoutes.get("/expirationDate", findItemsInInventoryByExpirationDateController.handle)
-inventoriesRoutes.get("/lowStock", findItemsInInventoryByLowStockController.handle)
+inventoriesRoutes.post("/", inventoryRegistrationValidator, createInventoryController.handle)
 inventoriesRoutes.get("/:id", findInventoryByIdController.handle)
-inventoriesRoutes.put("/:id", updateInventoryController.handle)
-inventoriesRoutes.post("/:id/addItem", addItemToInventoryController.handle)
+inventoriesRoutes.put("/:id", inventoryUpdateValidator, updateInventoryController.handle)
+inventoriesRoutes.get("/:id/lowStock", findItemsInInventoryByLowStockController.handle)
+inventoriesRoutes.post("/:id/addItem", itemRegistrationValidator, addItemToInventoryController.handle)
 inventoriesRoutes.get("/:id/items", listItemsInInventoryController.handle)
-inventoriesRoutes.get("/:id/item", findItemInInventoryController.handle)
-inventoriesRoutes.patch("/:itemId", updateItemQuantityController.handle)
+inventoriesRoutes.get("/:id/items/expirationDate", itemExpirationDateValidator, findItemsInInventoryByExpirationDateController.handle)
+inventoriesRoutes.get("/:id/:itemId", findItemInInventoryController.handle)
+inventoriesRoutes.patch("/:itemId", quantityValidator, updateItemQuantityController.handle)
