@@ -33,9 +33,9 @@ model Supplier {
 }
 
 model SupplierOnProduct {
-  product    Product         @relation(fields: [productId], references: [id])
+  product    Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId  String
-  supplier   Supplier        @relation(fields: [supplierId], references: [id])
+  supplier   Supplier        @relation(fields: [supplierId], references: [id], onDelete: Cascade)
   supplierId String
   assignedAt DateTime        @default(now())
   stocks     InventoryItem[]
@@ -54,9 +54,9 @@ model Address {
   country      String
   zipCode      String
 
-  supplier    Supplier?  @relation(fields: [supplierId], references: [id]) // Cadastrar migration no banco
+  supplier    Supplier?  @relation(fields: [supplierId], references: [id], onDelete: Cascade)
   supplierId  String?
-  inventory   Inventory? @relation(fields: [inventoryId], references: [id])
+  inventory   Inventory? @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
   inventoryId String?    @unique
 }
 
@@ -64,9 +64,9 @@ model InventoryItem {
   id       String @id() @default(uuid())
   quantity Int
 
-  inventory                   Inventory?         @relation(fields: [inventoryId], references: [id])
+  inventory                   Inventory?         @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
   inventoryId                 String?
-  supplierOnProduct           SupplierOnProduct? @relation(fields: [supplierOnProductProductId, supplierOnProductSupplierId], references: [productId, supplierId])
+  supplierOnProduct           SupplierOnProduct? @relation(fields: [supplierOnProductProductId, supplierOnProductSupplierId], references: [productId, supplierId], onDelete: Cascade)
   supplierOnProductProductId  String?
   supplierOnProductSupplierId String?
 }
