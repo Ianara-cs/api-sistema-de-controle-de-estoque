@@ -1,4 +1,5 @@
 import { prisma } from "../../../../shared/database/prismaClient";
+import { ICreateSupplierAddressDTO } from "../../dtos/ICreateSupplierAddressDTO";
 import { ISupplierResponseDTO } from "../../dtos/ISupplierResponseDTO";
 import { ISuppliersRepository } from "../ISuppliersRepository";
 
@@ -55,6 +56,31 @@ export class SuppliersRepository implements ISuppliersRepository {
   async findSupplierById(id: string): Promise<ISupplierResponseDTO | null> {
     const supplier = await prisma.supplier.findUnique({
       where: {id},
+      include: {addresses: true}
+    })
+
+    return supplier
+  }
+
+  async deleteSupplier(id: string): Promise<ISupplierResponseDTO> {
+    const supplier = await prisma.supplier.delete({
+      where: {id},
+      include: {addresses: true}
+    })
+
+    return supplier
+  }
+
+  async addAddressToSupplier({
+    id, city, complement, country, neighborhood, number, state, street, zipCode
+  }: ICreateSupplierAddressDTO): Promise<ISupplierResponseDTO> {
+    const supplier = await prisma.supplier.update({
+      where: {id},
+      data: {
+        addresses: {
+          create: {city, complement, country, neighborhood, number, state, street, zipCode}
+        }
+      },
       include: {addresses: true}
     })
 
