@@ -42,9 +42,10 @@ export class InventoryItemsRepository implements IInventoryItemsRepository  {
     return item
   }
 
-  async findItemsInInventoryByExpirationDate(date: Date): Promise<InventoryItem[]> {
+  async findItemsInInventoryByExpirationDate(inventoryId: string ,date: Date): Promise<InventoryItem[]> {
     const items = await prisma.inventoryItem.findMany({
       where: {
+        inventoryId,
         product: {expirationDate: {
           gte: new Date(date),
           lte: new Date(date),
@@ -55,9 +56,9 @@ export class InventoryItemsRepository implements IInventoryItemsRepository  {
     return items
   }
 
-  async findItemsInInventoryByLowStock(): Promise<InventoryItem[]> {
+  async findItemsInInventoryByLowStock(inventoryId: string): Promise<InventoryItem[]> {
     const items = await prisma.inventoryItem.findMany({
-      where: {quantity: {lte: 50}}
+      where: {inventoryId, quantity: {lte: 50}}
     })
 
     return items

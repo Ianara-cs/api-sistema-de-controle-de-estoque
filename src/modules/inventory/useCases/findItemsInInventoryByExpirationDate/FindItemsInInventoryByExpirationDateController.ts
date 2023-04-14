@@ -4,12 +4,14 @@ import { FindItemsInInventoryByExpirationDateUseCase } from "./FindItemsInInvent
 
 export class FindItemsInInventoryByExpirationDateController {
   async handle(request: Request, response: Response) {
-    const {date} = request.body
+    const {id} = request.params
+    const {expiration_date} = request.query
+    const date = expiration_date as unknown
 
     const findItemsInInventoryByExpirationDateUseCase = 
     container.resolve(FindItemsInInventoryByExpirationDateUseCase)
 
-    const items = await findItemsInInventoryByExpirationDateUseCase.execute(date)
+    const items = await findItemsInInventoryByExpirationDateUseCase.execute(id ,date as Date)
 
     return response.status(200).json(items)
   }

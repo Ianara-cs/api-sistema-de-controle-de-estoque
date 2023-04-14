@@ -1,7 +1,8 @@
-import { inject, injectable } from "tsyringe";
+import { container, inject, injectable } from "tsyringe";
 import { INJECT } from "../../../../shared/container";
 import { InventoryItem } from "../../entities/InventoryItem";
 import { IInventoryItemsRepository } from "../../repositories/IInventoryItemsRepository";
+import { FindInventoryByIdUseCase } from "../findInventoryById/FindInventoryByIdUseCase";
 
 @injectable()
 export class FindItemsInInventoryByExpirationDateUseCase {
@@ -10,8 +11,12 @@ export class FindItemsInInventoryByExpirationDateUseCase {
     private inventoryItemsRepository: IInventoryItemsRepository
   ) {}
 
-  async execute(date: Date): Promise<InventoryItem[]> {
-    const items = await this.inventoryItemsRepository.findItemsInInventoryByExpirationDate(date)
+  async execute(inventoryId: string ,date: Date): Promise<InventoryItem[]> {
+    const findInventoryByIdUseCase = container.resolve(FindInventoryByIdUseCase)
+    await findInventoryByIdUseCase.execute(inventoryId)
+
+    const items = await this.inventoryItemsRepository
+    .findItemsInInventoryByExpirationDate(inventoryId, date)
 
     return items
   }
