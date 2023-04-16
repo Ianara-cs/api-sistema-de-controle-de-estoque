@@ -12,6 +12,6 @@ export class CreateProductController {
       name, expirationDate, manufactureDate
     })
 
-    response.status(200).json(product)
+    response.status(201).json(product)
   }
 }

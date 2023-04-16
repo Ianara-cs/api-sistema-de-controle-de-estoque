@@ -11,6 +11,6 @@ export class AddItemToInventoryController {
 
     const item = await addItemToInventoryUseCase.execute({inventoryId, productId, quantity, supplierId})
 
-    return response.status(201).json(item)
+    return response.status(200).json(item)
   }
 }

@@ -10,6 +10,6 @@ export class AssignProductToASupplierController {
     const assignProductToASupplierUseCase = container.resolve(AssignProductToASupplierUseCase)
     const product = await assignProductToASupplierUseCase.execute(id, supplierId)
 
-    return response.status(201).json(product)
+    return response.status(200).json(product)
   }
 }

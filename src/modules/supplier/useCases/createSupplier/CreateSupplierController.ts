@@ -15,6 +15,6 @@ export class CreateSupplierController {
       complement, country, neighborhood, number, state, street, zipCode
     })
 
-    return response.status(200).json(supplier)
+    return response.status(201).json(supplier)
   }
 }

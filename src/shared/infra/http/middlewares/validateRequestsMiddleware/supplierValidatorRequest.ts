@@ -13,14 +13,14 @@ export const supplierRegistrationValidator = celebrate({
       "any.required": "The city field is required!"
     }),
 
-    cnpj: Joi.string().required().pattern(/^(\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2})$/)
+    cnpj: Joi.string().required().pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/)
     .messages({
       "string.empty": "The cnpj field cannot be empty!",
       "string.pattern.base": "The cnpj field must be of type cnpj!",
       "any.required": "The city field is required!"
     }), 
 
-    phone: Joi.string().required().pattern(/^\+?\d{1,4}?\s?\(?(\d{2})\)?[-\s]?\d{4,5}[-\s]?\d{4}$/)
+    phone: Joi.string().required().pattern(/\b\d{2}\d{5}\d{4}\b/)
     .messages({
       "string.empty": "The phone field cannot be empty!",
       "string.pattern.base": "The phone field must be of type phone!",
@@ -57,7 +57,7 @@ export const supplierRegistrationValidator = celebrate({
       "any.required": "The street field is required!"
     }),
 
-    zipCode: Joi.string().required().empty().pattern(/^\d{5}-?\d{3}$/)
+    zipCode: Joi.string().required().empty().pattern(/^\d{5}\d{3}$/)
     .messages({
       "string.empty": "The zipCode field cannot be empty!",
       "string.pattern.base": "The zipCode field must be of type zipCode!",
@@ -98,7 +98,7 @@ export const supplierAddressValidator = celebrate({
       "any.required": "The street field is required!"
     }),
 
-    zipCode: Joi.string().required().empty().pattern(/^\d{5}-?\d{3}$/)
+    zipCode: Joi.string().required().empty().pattern(/^\d{5}\d{3}$/)
     .messages({
       "string.empty": "The zipCode field cannot be empty!",
       "string.pattern.base": "The zipCode field must be of type zipCode!",

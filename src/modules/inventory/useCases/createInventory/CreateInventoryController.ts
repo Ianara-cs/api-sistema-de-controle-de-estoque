@@ -14,6 +14,6 @@ export class CreateInventoryController {
       name, city, complement, country, neighborhood, number, state, street, zipCode
     })
 
-    return response.status(200).json(inventory)
+    return response.status(201).json(inventory)
   }
 }
