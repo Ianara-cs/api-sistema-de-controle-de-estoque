@@ -6,9 +6,9 @@ import { IUpdateProductDTO } from "../../dtos/IUpdateProductDTO";
 import { IProductsRepository } from "../IProductsRepository";
 
 export class ProductsRepository implements IProductsRepository {
-  async create({name, expirationDate, manufactureDate}: ICreateProductDTO): Promise<Product> {
+  async create({name, expirationDate, manufactureDate, brand, description}: ICreateProductDTO): Promise<Product> {
     const newProduct = await prisma.product.create({
-      data: {expirationDate, name, manufactureDate}, 
+      data: {expirationDate, name, manufactureDate, brand, description}, 
       include:{supplierOnProduct: true}  
     })
 
@@ -55,13 +55,13 @@ export class ProductsRepository implements IProductsRepository {
     return products
   }
 
-  async updateProduct({id, name }: IUpdateProductDTO): Promise<Product> {
+  async updateProduct({id, name, description }: IUpdateProductDTO): Promise<Product> {
     const updateProduct = await prisma.product.update({
       where: {
         id
       }, 
       data: {
-        name,
+        name, description
       },
       include: {supplierOnProduct: true} 
     })

@@ -7,6 +7,16 @@ export const productRegistrationValidator = celebrate({
       "any.required": "The name field is required!"
     }),
 
+    brand: Joi.string().required().messages({
+      "string.empty": `The brand field cannot be empty!`,
+      "any.required": "The brand field is required!"
+    }),
+
+    description: Joi.string().required().messages({
+      "string.empty": `The description field cannot be empty!`,
+      "any.required": "The description field is required!"
+    }),
+
     expirationDate: Joi.date().required().iso().greater('now').messages({
       "date.format": "The expirationDate field must be in ISO 8601 date format!",
       "date.greater": "The expirationDate field is greater than the current date!",
@@ -18,15 +28,6 @@ export const productRegistrationValidator = celebrate({
       "date.format": "The manufactureDate field must be in ISO 8601 date format!",
       "any.required": "The manufactureDate field is required!"
     })
-  })
-})
-
-export const productUpdateValidator = celebrate({
-  [Segments.BODY]: Joi.object().keys({
-    name: Joi.string().required().messages({
-      "string.empty": `The name field cannot be empty!`,
-      "any.required": "The name field is required!"
-    }),
   })
 })
 

@@ -13,6 +13,8 @@ datasource db {
 model Product {
   id              String   @id() @default(uuid())
   name            String
+  brand           String
+  description     String
   expirationDate  DateTime
   manufactureDate DateTime
   createdAt       DateTime @default(now())

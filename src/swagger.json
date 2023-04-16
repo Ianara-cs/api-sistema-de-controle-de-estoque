@@ -23,6 +23,12 @@
                   "name": {
                     "type": "string"
                   }, 
+                  "brand": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
                   "manufactureDate": {
                     "type": "string",
                     "format": "date"
@@ -31,11 +37,6 @@
                     "type": "string",
                     "format": "date"
                   }
-                },
-                "example": {
-                  "name": "Aguá sanitária",
-                  "manufactureDate": "2023-01-07",
-                  "expirationDate": "2025-05-09"
                 }
               }
             }
@@ -140,7 +141,7 @@
       "put": {
         "tags": ["Product"],
         "summary": "Update a product by ID",
-        "description": "Update product name",
+        "description": "Update product name and description",
         "parameters": [{
           "in": "path",
           "name": "id",
@@ -158,8 +159,10 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string",
-                    "required": true
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
                   }
                 }
               }
@@ -173,16 +176,6 @@
               "application/json": {
                 "schema": {
                   "$ref":"#/components/schemas/Product"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -1097,6 +1090,12 @@
             "format": "uuid"
           },
           "name": {
+            "type": "string"
+          },
+          "brand": {
+            "type": "string"
+          },  
+          "description": {
             "type": "string"
           }, 
           "manufactureDate": {

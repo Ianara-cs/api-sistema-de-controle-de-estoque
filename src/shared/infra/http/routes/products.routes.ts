@@ -11,8 +11,7 @@ import {
   productExpirationDateValidator,
   productManufactureDateValidator,
   productRegistrationValidator,
-  productSupplierValidator,
-  productUpdateValidator
+  productSupplierValidator
 } from "../middlewares/validateRequestsMiddleware/productValidateRequests";
 
 export const productRoutes = Router()
@@ -32,7 +31,7 @@ productRoutes.get("/", listProductsController.handle)
 productRoutes.get("/expirationDate", productExpirationDateValidator, findProductByExpirationDateController.handle)
 productRoutes.get("/manufactureDate", productManufactureDateValidator, findProductByManufactureDateController.handle)
 productRoutes.get("/:id", findProductController.handle)
-productRoutes.put("/:id", productUpdateValidator,  updateProductController.handle)
+productRoutes.put("/:id", updateProductController.handle)
 productRoutes.delete("/:id", deleteProductController.handle)
 productRoutes.post("/:id/addSupplier", productSupplierValidator, assignProductToASupplierController.handle)
 

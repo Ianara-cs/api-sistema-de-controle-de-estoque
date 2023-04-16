@@ -11,11 +11,15 @@ export class CreateProductUseCase {
     private productsRepository : IProductsRepository
   ) {}
 
-  async execute({name, expirationDate, manufactureDate}: ICreateProductDTO): Promise<Product> {
+  async execute({
+    name, expirationDate, manufactureDate, brand, description
+  }: ICreateProductDTO): Promise<Product> {
     const product = await this.productsRepository.create({
       name,  
       expirationDate,
-      manufactureDate
+      manufactureDate,
+      brand, 
+      description
     })
 
     return product

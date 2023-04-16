@@ -12,7 +12,7 @@ export class UpdateProductUseCase {
     private productsRepository: IProductsRepository
   ) {}
 
-  async execute({id, name}: IUpdateProductDTO): Promise<Product> {
+  async execute({id, name, description}: IUpdateProductDTO): Promise<Product> {
     const product = await this.productsRepository.findById(id)
 
     if(!product) {
@@ -23,8 +23,12 @@ export class UpdateProductUseCase {
       name = product.name
     } 
 
+    if(!description) {
+      description = product.description
+    }
+
     const updateProduct = await this.productsRepository.updateProduct({
-      id, name
+      id, name, description
     })
 
     return updateProduct
