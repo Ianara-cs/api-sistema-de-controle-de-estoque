@@ -8,6 +8,9 @@
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts"
   },
+  "prisma": {
+    "schema": "src/shared/infra/prisma/schema.prisma"
+  },
   "dependencies": {
     "@prisma/client": "^4.11.0",
     "celebrate": "^15.0.1",

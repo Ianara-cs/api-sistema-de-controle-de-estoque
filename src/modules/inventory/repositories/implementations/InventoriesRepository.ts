@@ -1,4 +1,4 @@
-import { prisma } from "../../../../shared/database/prismaClient";
+import { prisma } from "../../../../shared/infra/prisma/prismaClient";
 import { ICreateInventoryDTO } from "../../dtos/ICreateInventoryDTO";
 import { IInventoryResponse } from "../../dtos/IInventoryReponse";
 import { IUpdateInventoryDTO } from "../../dtos/IUpdateInventoryDTO";

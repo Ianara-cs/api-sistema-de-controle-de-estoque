@@ -1,5 +1,5 @@
 import { Product } from "@prisma/client";
-import { prisma } from "../../../../shared/database/prismaClient";
+import { prisma } from "../../../../shared/infra/prisma/prismaClient";
 import { ICreateProductDTO } from "../../dtos/ICreateProductDTO";
 import { IProductAndSupplierResponseDTO } from "../../dtos/IProductAndSupplierResponseDTO";
 import { IUpdateProductDTO } from "../../dtos/IUpdateProductDTO";

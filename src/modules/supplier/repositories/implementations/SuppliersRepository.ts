@@ -1,4 +1,4 @@
-import { prisma } from "../../../../shared/database/prismaClient";
+import { prisma } from "../../../../shared/infra/prisma/prismaClient";
 import { ICreateSupplierAddressDTO } from "../../dtos/ICreateSupplierAddressDTO";
 import { ISupplierResponseDTO } from "../../dtos/ISupplierResponseDTO";
 import { ISuppliersRepository } from "../ISuppliersRepository";
