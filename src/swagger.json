@@ -1,6 +1,6 @@
 {
   "openapi": "3.0.0",
-  "infor": {
+  "info": {
     "title": "Documentation",
     "description": "This is an Inventory Control API",
     "version": "1.0.0",
